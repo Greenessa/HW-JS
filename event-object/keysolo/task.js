@@ -4,7 +4,12 @@ class Game {
     this.wordElement = container.querySelector('.word');
     this.winsElement = container.querySelector('.status__wins');
     this.lossElement = container.querySelector('.status__loss');
-
+    this.timerElement = container.querySelector('.timer');
+    this.timerId;
+  //   this.timerId = setInterval((q) => {
+  //     q=q-1;
+  //     this.timerElement.textContent=q;
+  // }, 1000);
 
     this.reset();
 
@@ -12,26 +17,29 @@ class Game {
   }
 
   reset() {
-    this.setNewWord();
     this.winsElement.textContent = 0;
     this.lossElement.textContent = 0;
-   
+    this.setNewWord();
+    if (this.timerId) {clearInterval(this.timerId);}
   }
-  // // let timerId = setInterval(() => alert('tick'), 2000);
-  //   // setTimeout(() => { clearInterval(timerId); alert('stop'); }, 5000);
-  //   let q = document.querySelector('.timer').textContent;
-  //   let m = q+1;
-  //   let timerId = setInterval(() => {
-  //     q=q-1;
-  //     if (q<0) return;
-  //     console.log(q);
-  //     document.querySelector('.timer').innerHTML=q;
-  //   }, 1000);
-  //   setTimeout(() => {clearInterval(timerId); alert('Ваше время вышло');}, m*1000);
+  startUpTimer() {
+    let q = this.timerElement.textContent;
+    let m=q*1000;
+    // this.timerId(q);
+    this.timerId = setInterval(() => {
+        q=q-1;
+        this.timerElement.textContent=q;
+    }, 1000);
+    if (q<1) {
+      this.fail();
+      clearInterval(this.timerId);
+    }
+    setTimeout(() => {clearInterval(this.timerId);},m);
+  }
   
   registerEvents() {
     let thisPrev=this;
-    document.addEventListener('keyup', (event) => {
+    document.addEventListener('keyup', function(event) {
       let s=thisPrev.currentSymbol.innerHTML.toLowerCase();
        if (event.key.toLowerCase()==s) {
         thisPrev.success();
@@ -59,10 +67,13 @@ class Game {
     if (this.currentSymbol !== null) {
       this.currentSymbol.classList.add('symbol_current');
       return;
+    } else {
+      clearInterval(this.timerId);
     }
 
-    if (++this.winsElement.textContent === 10) {
+    if (++this.winsElement.textContent === 3) {
       alert('Победа!');
+      clearInterval(this.timerId);
       this.reset();
     }
     this.setNewWord();
@@ -72,24 +83,17 @@ class Game {
   fail() {
     if (++this.lossElement.textContent === 5) {
       alert('Вы проиграли!');
+      clearInterval(this.timerId);
       this.reset();
     }
     this.setNewWord();
     
-  
   }
 
   setNewWord() {
     const word = this.getWord();
     this.renderWord(word);
-    let q = document.querySelector('.timer').textContent;
-    let m=q*1000;
-    let timerId = setInterval(() => {
-        q=q-1;
-        document.querySelector('.timer').innerHTML=q;
-    }, 1000);
-    let x=document.querySelector('.timer').textContent;
-    setTimeout(() => {clearInterval(timerId); this.fail(); },m);
+    this.startUpTimer();
     }
 
   getWord() {
@@ -114,7 +118,7 @@ class Game {
   renderWord(word) {
     let n = [...word].length;
     // console.log(n);
-    document.querySelector('.timer').innerHTML=n;
+    this.timerElement.textContent = n;
     const html = [...word]
       .map(
         (s, i) =>
@@ -127,6 +131,5 @@ class Game {
     
   }
 }
-
 new Game(document.getElementById('game'))
 

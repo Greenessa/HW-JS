@@ -1,23 +1,17 @@
 
 const dropdown = document.querySelector('.dropdown');
-const list = document.querySelector('.dropdown__list');
-const listItems = Array.from(document.querySelectorAll('.dropdown__item'));
-const value = document.querySelector('.dropdown__value');
-// const listItems = Array.from(document.querySelectorAll('.dropdown__link'))
-// console.log(listItems[2].children[0].textContent);
-// value.textContent = listItems[2].children[0].textContent;
-// console.log(value.textContent);
+const listAll = document.querySelector('.dropdown__list');
+const listItems = document.querySelectorAll('.dropdown__link');
+
+const valuePoint = document.querySelector('.dropdown__value');
 
 dropdown.addEventListener('click', function(event) {
-  list.classList.toggle('dropdown__list_active');
-  event.stopPropagation();
+  // listAll.classList.toggle('dropdown__list_active');
+  listAll.classList.add('dropdown__list_active');
+  // event.stopPropagation();
 })
-// document.addEventListener('click', (e)=> {
-//     if(e.target.closest('.dropdown__list')) return 
-    
-//     list.classList.remove('dropdown__list_active');
-  
-//   })
+
+
 
 // for (let item of listItems) {
 //     item.addEventListener('click', function(ev) {
@@ -26,11 +20,15 @@ dropdown.addEventListener('click', function(event) {
 //       list.classList.remove('dropdown__list_active');
 //       })  
 //     }
-listItems.forEach((item, index) => {
-    item.addEventListener('click', () => {
-        value.textContent = item.children[0].textContent;
-        list.classList.remove('dropdown__list_active'); 
-    })
-})
+
+for (let i=0; i < listItems.length;i++) {
+  listItems[i].addEventListener('click', function(e) {
+    console.log(e.target);
+    valuePoint.textContent=listItems[i].textContent;
+    console.log(valuePoint.textContent);
+    // listAll.classList.remove('dropdown__list_active'); 
+  })
+  }
+
 
  
