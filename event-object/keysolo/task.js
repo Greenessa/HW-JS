@@ -16,7 +16,7 @@ class Game {
     this.winsElement.textContent = 0;
     this.lossElement.textContent = 0;
     this.setNewWord();
-    if (this.timerId) {clearInterval(this.timerId);}
+    // if (this.timerId) {clearInterval(this.timerId);}
   }
 
   
