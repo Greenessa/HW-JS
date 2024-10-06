@@ -5,11 +5,7 @@ class Game {
     this.winsElement = container.querySelector('.status__wins');
     this.lossElement = container.querySelector('.status__loss');
     this.timerElement = container.querySelector('.timer');
-    this.timerId;
-  //   this.timerId = setInterval((q) => {
-  //     q=q-1;
-  //     this.timerElement.textContent=q;
-  // }, 1000);
+    this.timerId = null;
 
     this.reset();
 
@@ -22,19 +18,26 @@ class Game {
     this.setNewWord();
     if (this.timerId) {clearInterval(this.timerId);}
   }
+
+  
   startUpTimer() {
-    let q = this.timerElement.textContent;
-    let m=q*1000;
-    // this.timerId(q);
+    if (this.timerId) {
+      clearInterval(this.timerId);
+      this.timerId = null;
+    };
+    let q = parseInt(this.timerElement.textContent);
+    // let m=q*1000;
     this.timerId = setInterval(() => {
         q=q-1;
         this.timerElement.textContent=q;
+        if (q<1) {
+          this.fail();
+          clearInterval(this.timerId);
+          this.timerId = null;
+        }
     }, 1000);
-    if (q<1) {
-      this.fail();
-      clearInterval(this.timerId);
-    }
-    setTimeout(() => {clearInterval(this.timerId);},m);
+    
+    // setTimeout(() => {clearInterval(this.timerId);},m);
   }
   
   registerEvents() {
@@ -67,13 +70,11 @@ class Game {
     if (this.currentSymbol !== null) {
       this.currentSymbol.classList.add('symbol_current');
       return;
-    } else {
-      clearInterval(this.timerId);
-    }
+    } 
+  
 
     if (++this.winsElement.textContent === 3) {
       alert('Победа!');
-      clearInterval(this.timerId);
       this.reset();
     }
     this.setNewWord();
@@ -83,7 +84,6 @@ class Game {
   fail() {
     if (++this.lossElement.textContent === 5) {
       alert('Вы проиграли!');
-      clearInterval(this.timerId);
       this.reset();
     }
     this.setNewWord();
