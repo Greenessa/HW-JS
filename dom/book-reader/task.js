@@ -3,6 +3,7 @@ for (let i = 0; i < fontElems.length; i++) {
     const el = fontElems[i];
     el.addEventListener('click', (e)=> {
         if (!(el.classList.contains('font-size_active'))) {
+            console.log(e.target);
             e.preventDefault();
             let prevEl = document.querySelector('.font-size_active');
             prevEl.classList.remove('font-size_active');

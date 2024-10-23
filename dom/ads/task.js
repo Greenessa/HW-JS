@@ -1,19 +1,36 @@
+// let i = 0;
+// let s = 1000;
+// let adsItems = Array.from(document.querySelectorAll('.rotator__case'));
+// const changeAd = setTimeout(function cnahge () {
+//     adsItems.forEach((ad, i, adsItems) => {
+//         if (ad.classList.contains('rotator__case_active')) {
+//             ad.classList.remove('rotator__case_active')
+//         }
+//         adsItems[i].classList.add('rotator__case_active');
+//         if (adsItems[i].nextElementSibling) {
+//             i=i+1;
+//         } else {
+//             i=0;
+//         }
+//         s = ad.dataset.speed;
+//         ad.style.color = ad.dataset.color;
+//         changeAd = setTimeout(cnahge,s);
+//     });
+// },s)
+
+
 let cardItems = document.querySelectorAll('.card');
 
-for (const item of cardItems) {
+for (const item of cardItems) { 
     let adsItems = item.querySelectorAll('.rotator__case');
-    let sp = [];
-    // let s = 0;
+    let s = 1000;
     for (const ad of adsItems) {
     let col=ad.dataset.color;
-    sp.push(parseInt(ad.dataset.speed));
     ad.style.color = col;
     }
-    for (let s of sp) {
-    // s = parseInt(ad.dataset.speed);
-        const changeAd = setTimeout(() => {
+        const changeAd = setTimeout(function cnahge () {
             let elemCurrent = item.querySelector('.rotator__case_active');
-            // s = parseInt(elemCurrent.dataset.speed); 
+            s = parseInt(elemCurrent.dataset.speed); 
             // console.log(s);
             let rotator = item.querySelector('.rotator');
             //   console.log(rotator)
@@ -22,14 +39,13 @@ for (const item of cardItems) {
             //   console.log(elemCurrent);
             if (elemCurrent !== null) {
                 elemCurrent.classList.add('rotator__case_active');
-                changeAd;
+                changeAd = setTimeout(cnahge,s);
             } else {
                 elemCurrent = rotator.firstElementChild;
                 // console.log(elemCurrent)
                 elemCurrent.classList.add('rotator__case_active');
-                changeAd;
+                changeAd = setTimeout(cnahge,s);
             }      
         },s)
-    }
 }
 
