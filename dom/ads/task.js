@@ -28,7 +28,7 @@ for (const item of cardItems) {
     let col=ad.dataset.color;
     ad.style.color = col;
     }
-        const changeAd = setTimeout(function cnahge () {
+        let changeAd = setTimeout(function cnahge () {
             let elemCurrent = item.querySelector('.rotator__case_active');
             s = parseInt(elemCurrent.dataset.speed); 
             // console.log(s);
