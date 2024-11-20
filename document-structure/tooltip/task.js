@@ -9,10 +9,15 @@ for (const el of tipsElems) {
         el.dataset.position = place;
     }
 }
-// let activeTip = null;
+let clickTip = null;
 for (const el of tipsElems) {
     el.addEventListener("click", (e) => {
         e.preventDefault();
+        console.log(el);
+        console.log(clickTip);
+        if (clickTip === el) {
+            el.nextElementSibling.classList.remove('tooltip_active');
+        } else {
         let activeTip = document.querySelector('.tooltip_active');
         if (activeTip) {
             activeTip.classList.remove('tooltip_active');
@@ -44,5 +49,7 @@ for (const el of tipsElems) {
             activeTip.style.top = top + 'px';
             activeTip.style.left = r +'px';
         }
+    }
+    clickTip = el;
     })
 }
