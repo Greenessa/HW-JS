@@ -16,7 +16,7 @@ for (const el of tipsElems) {
         console.log(el);
         console.log(clickTip);
         if (clickTip === el) {
-            el.nextElementSibling.classList.remove('tooltip_active');
+            el.nextElementSibling.classList.toggle('tooltip_active');
         } else {
         let activeTip = document.querySelector('.tooltip_active');
         if (activeTip) {
